@@ -4,9 +4,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Chapa</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+
+
+
 </head>
 <body>
+	<h1 style="margin-left:200px">Chapa</h1>
+
+	<form method="post" action="index.jsp" class="form-container">
+		
+		
+		
+	
+		<table class="tabela">
+			<tr style="background:#696969">
+				<th>Nome da chapa</th>
+			    <th id="acao">Ação</th>
+		    </tr>
+			  
+			 <tr>
+				<td ></td>
+			    <td>
+			    <input type="button" name="teditar" value="Editar" class="btn-primary"/>
+				<input type="button" name="Excluir" value="Excluir" class="btn-primary"/>
+				</tb>
+		    </tr>
+			 
+
+		</table>
+	</form>
 
 </body>
 </html>

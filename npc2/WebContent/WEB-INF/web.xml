@@ -17,6 +17,18 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletLogin</servlet-name>
-    <url-pattern>/ServletLogin</url-pattern>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ServletChapa</display-name>
+    <servlet-name>ServletChapa</servlet-name>
+    <servlet-class>controlador.chapa.ServletChapa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletChapa</servlet-name>
+    <url-pattern>/ServletChapa</url-pattern>
+    <url-pattern>/ServletLogin?acao=login</url-pattern>
+    
   </servlet-mapping>
 </web-app>

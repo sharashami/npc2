@@ -1,6 +1,7 @@
 package modelo.chapa;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class Chapa {
 	@OneToOne
 	private Aluno criador;
 	
+	@Column(unique=true)
 	private String nome;
 	
 	@OneToMany(mappedBy="chapa",cascade=CascadeType.REMOVE)

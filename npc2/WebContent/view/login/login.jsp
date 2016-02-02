@@ -1,12 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Autenticação de Usuário</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+
+<link href="${pageContext.request.contextPath}/css/layout.css" rel="stylesheet" type="text/css" />
 </head>
+
+
 <body>
-LOGIN
+
+				<div class="loginmodal-container">
+					<h1>LOGIN</h1><br>
+				  <form  method="post" action="${pageContext.request.contextPath}/ServletLogin?acao=login">
+					<label for="matricula">Matricula</label><input type="text" name="matricula" placeholder="Matricula">
+					<label for="senha">Senha</label><input type="password" name="senha" placeholder="Senha">
+					<input type="submit" name="login" class="login loginmodal-submit" value="Login">
+				  </form>
+					
+				</div>
+		
 </body>
+
 </html>
+

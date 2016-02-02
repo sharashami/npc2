@@ -1,5 +1,6 @@
 package modelo.aluno;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +12,8 @@ public class Aluno {
 	@Id
 	@GeneratedValue
 	private long id;
+	
+	@Column(unique = true)
 	private String matricula;
 	private String senha;
 	

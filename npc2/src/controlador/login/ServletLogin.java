@@ -34,21 +34,59 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		dispatcher = request.getRequestDispatcher("view/login/login.jsp");
-		modelo.aluno.AlunoRN alunoRN = new AlunoRN();
-    	Aluno aluno = new modelo.aluno.Aluno();
-    	try {
-			alunoRN.carregarAluno(aluno);
-		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String acao = request.getParameter("acao");
+		criaBaseAluno();
+		
+		if("login".equals(acao)){
+			Aluno a = new Aluno();
+			a.setSenha(request.getParameter("senha"));
+			a.setMatricula(request.getParameter("matricula"));
+			
+			AlunoRN rn = new AlunoRN();
+			try {
+				a = rn.autenticarAluno(a);
+
+				if(a != null && a.getId() > 0){
+					System.out.println("aluno encontrado");
+					dispatcher = request.getRequestDispatcher("paginainicial.jsp");
+				}
+			} catch (HibernateException e) {
+				e.printStackTrace();
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}else{
+		
+			dispatcher = request.getRequestDispatcher("view/login/login.jsp");
 		}
+		
+		
     	dispatcher.forward(request, response);
 		
 		
+	}
+
+	private void criaBaseAluno() {
+		AlunoRN rn = new AlunoRN();
+		java.util.List<Aluno> lista= rn.listarAlunos();
+		if(lista == null || lista.isEmpty()){
+			Aluno a = new Aluno();
+			a.setMatricula("1234");
+			a.setSenha("1234");
+			rn.salvar(a);
+			a = new Aluno();
+			a.setMatricula("4321");
+			a.setSenha("1234");
+			rn.salvar(a);
+			a = new Aluno();
+			a.setMatricula("5678");
+			a.setSenha("1234");
+			rn.salvar(a);
+			a = new Aluno();
+			a.setMatricula("8765");
+			a.setSenha("1234");
+			rn.salvar(a);
+		}
 	}
 
 	/**
