@@ -13,5 +13,8 @@
  
   
   <mapping class="modelo.aluno.Aluno"/>
+  <mapping class="modelo.chapa.Chapa"/>
+  <mapping class="modelo.chapa.Integrante"/>
+  <mapping class="modelo.votacao.Votacao"/>
  </session-factory>
 </hibernate-configuration>

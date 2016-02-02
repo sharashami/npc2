@@ -2,7 +2,9 @@ package modelo.votacao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import modelo.aluno.Aluno;
@@ -12,11 +14,15 @@ import modelo.chapa.Chapa;
 @Table(name="votacao")
 public class Votacao {
 	@Id
+	@GeneratedValue
 	private long id;
 	
-	@Column(unique = true)
+	@OneToOne
 	private Aluno eleitor;
+
+	@OneToOne
 	private Chapa chapa;
+	
 	public long getId() {
 		return id;
 	}

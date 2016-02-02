@@ -1,7 +1,12 @@
 package modelo.chapa;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import modelo.aluno.Aluno;
@@ -11,9 +16,15 @@ import modelo.aluno.Aluno;
 public class Chapa {
 
 	@Id
+	@GeneratedValue
 	private long id;
+	
+	@OneToOne
 	private Aluno criador;
+	
 	private String nome;
+	
+	@OneToMany(mappedBy="chapa",cascade=CascadeType.REMOVE)
 	private java.util.List<Integrante> integrante;
 	
 	public String getNome() {

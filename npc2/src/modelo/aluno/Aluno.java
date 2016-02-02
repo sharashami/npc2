@@ -1,6 +1,7 @@
 package modelo.aluno;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 @Table(name="aluno")
 public class Aluno {
 	@Id
+	@GeneratedValue
 	private long id;
 	private String matricula;
 	private String senha;
