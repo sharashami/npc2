@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/lib/c.tld" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,16 +24,22 @@
 		<table class="tabela">
 			<tr style="background:#696969">
 				<th>Nome da chapa</th>
+				<th>Composição</th>
 			    <th id="acao">Ação</th>
 		    </tr>
-			  
-			 <tr>
-				<td ></td>
-			    <td>
-			    <input type="button" name="teditar" value="Editar" class="btn-primary"/>
-				<input type="button" name="Excluir" value="Excluir" class="btn-primary"/>
-				</tb>
-		    </tr>
+			   <c:forEach items="${chapas}" var="c">
+				   	<tr>
+						<td >${c.nome}</td>
+						<td >${c.composicao}</td>
+					    <td>
+					    <input type="button" name="teditar" value="Editar" class="btn-primary"/>
+						<input type="button" name="Excluir" value="Excluir" class="btn-primary"/>
+						</td>
+				    </tr>
+			 	  
+			   
+			   </c:forEach>
+			 
 			 
 
 		</table>

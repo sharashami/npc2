@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import modelo.aluno.Aluno;
 
@@ -26,8 +27,12 @@ public class Chapa {
 	@Column(unique=true)
 	private String nome;
 	
-	@OneToMany(mappedBy="chapa",cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="chapa",targetEntity=Integrante.class ,fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private java.util.List<Integrante> integrante;
+	
+	
+	@Transient
+	private String composicao;
 	
 	public String getNome() {
 		return nome;
@@ -91,5 +96,19 @@ public class Chapa {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
+	}
+	public String getComposicao() {
+		StringBuilder html = new StringBuilder();
+		if(id > 0){
+			for (int i = 0; i < integrante.size(); i++) {
+				Integrante integ = integrante.get(i);
+				html.append("<hr><br>Função: "+integ.getFuncao()+"<br>"+"Nome:" +integ.getNome()+"<br>"+"Matrícula:" +integ.getMatricula()+"<br>"+"Curso:" +integ.getCurso());
+			}
+		}
+		composicao = html.toString();
+		return composicao;
+	}
+	public void setComposicao(String composicao) {
+		this.composicao = composicao;
 	}
 }

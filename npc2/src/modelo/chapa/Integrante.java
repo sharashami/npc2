@@ -19,7 +19,7 @@ public class Integrante{
 	private String funcao;
 	private String curso;
 
-	@ManyToOne(cascade=CascadeType.REMOVE)
+	@ManyToOne
 	private Chapa chapa;
 	
 	public String getFuncao() {
