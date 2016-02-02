@@ -16,6 +16,7 @@
 
 
 <body>
+<%@ include file="/menu.jsp" %>
 	<h1 style="margin-left:200px">Cadastrar Chapa</h1>
 
 	<form method="post" action="${pageContext.request.contextPath}/ServletChapa?acao=form" class="form-container">

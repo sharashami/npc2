@@ -18,6 +18,7 @@ import modelo.chapa.Integrante;
 
 import org.apache.commons.lang3.StringUtils;
 
+import controlador.login.ServletLogin;
 import controlador.util.Formata;
 
 /**
@@ -38,6 +39,11 @@ public class ServletChapa extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(!ServletLogin.verificaUsuarioLogado(request,response)){
+			dispatcher = request.getRequestDispatcher("view/login/login.jsp");
+	    	dispatcher.forward(request, response);
+	    	return ;
+		}
 		String acao = request.getParameter("acao");
 
 		if("form".equals(acao)){
@@ -51,6 +57,7 @@ public class ServletChapa extends HttpServlet {
 						 					{"tesoureiromatricula","Obrigatorio"},{"tesoureironome","Obrigatorio"},{"tesoureirocurso","Obrigatorio"}};
 				 
 				if(isValidoForm(request, response, obrigatorios, chapa)){
+					chapa.setCriador(ServletLogin.usuarioLogado(request));
 					ChapaRN rn = new ChapaRN();
 					rn.salvar(chapa);
 					index(request, response);

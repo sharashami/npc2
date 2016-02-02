@@ -13,8 +13,9 @@
 
 </head>
 <body>
+<%@ include file="/menu.jsp" %>
 	<h1 style="margin-left: 200px">Resultado</h1>
-
+	
 	<form method="post" action="index.jsp" class="form-container">
 
 		<table class="tabela">

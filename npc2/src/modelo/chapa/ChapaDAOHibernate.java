@@ -61,5 +61,28 @@ public class ChapaDAOHibernate implements ChapaDAO{
 	
 		return registros;
 	}
+	@Override
+	public Chapa getChapa(long id) {
+		Chapa c = null;	
+		try {
+			this.sessao = HibernateUtil.getSessionFactory().openSession();
+			Query query = this.sessao
+					.createQuery("select x from Chapa as x where x.id = :id");
+			query.setLong("id",id);
+			c = (Chapa) query.uniqueResult();
+			
+		} catch (HibernateException ex) {
+			System.out.println("Erro ao fazer consulta: "
+					+ ex.getMessage());
+		} finally {
+			try {
+				if (this.sessao.isOpen())
+					this.sessao.close();
+			} catch (Throwable ex) {
+				System.out.println("Erro ao fechar a sessão:" + ex.getMessage());
+			}
+		}
+		return c;
+	}
 
 }

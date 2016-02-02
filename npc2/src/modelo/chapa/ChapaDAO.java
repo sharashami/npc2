@@ -7,5 +7,7 @@ public interface ChapaDAO {
 	public Chapa salvarChapa(Chapa chapa);
 
 	public List<Chapa> listarChapas();
+
+	public Chapa getChapa(long id);
 	
 }

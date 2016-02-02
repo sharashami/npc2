@@ -15,9 +15,7 @@
 
 
 <body>
-	<h1 style="margin-left:100px">Sistema de votação - DCE - UECE</h1>
-
-<a href="${pageContext.request.contextPath}/ServletChapa?acao=form">cadastrar chapa</a>
+<%@ include file="/menu.jsp" %>
 
 	<form method="post" action="index.jsp" class="container" id="content">
 		<table>

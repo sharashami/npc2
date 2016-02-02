@@ -19,4 +19,7 @@ public class ChapaRN {
 	public List<Chapa> listarChapas(){
 		return chapaDAO.listarChapas();
 	}
+	public Chapa getChapa(long id) {
+		return chapaDAO.getChapa(id);
+	}
 }

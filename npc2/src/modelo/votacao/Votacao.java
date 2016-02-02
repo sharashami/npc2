@@ -2,6 +2,7 @@ package modelo.votacao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -20,7 +21,7 @@ public class Votacao {
 	@OneToOne
 	private Aluno eleitor;
 
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	private Chapa chapa;
 	
 	public long getId() {

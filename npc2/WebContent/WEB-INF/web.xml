@@ -29,6 +29,15 @@
     <servlet-name>ServletChapa</servlet-name>
     <url-pattern>/ServletChapa</url-pattern>
     <url-pattern>/ServletLogin?acao=login</url-pattern>
-    
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ServletVotacao</display-name>
+    <servlet-name>ServletVotacao</servlet-name>
+    <servlet-class>controlador.votacao.ServletVotacao</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletVotacao</servlet-name>
+    <url-pattern>/ServletVotacao</url-pattern>
   </servlet-mapping>
 </web-app>

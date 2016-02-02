@@ -8,10 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.aluno.Aluno;
 import modelo.aluno.AlunoRN;
 
+import org.apache.catalina.connector.Request;
 import org.hibernate.HibernateException;
 
 /**
@@ -22,6 +24,16 @@ public class ServletLogin extends HttpServlet {
 	private javax.servlet.RequestDispatcher dispatcher = null;
 
        
+	public static Aluno usuarioLogado(HttpServletRequest request){
+		return (Aluno) request.getSession().getAttribute("usuario");
+	}
+
+	public static boolean verificaUsuarioLogado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		HttpSession session = request.getSession();
+		Aluno a = (Aluno) session.getAttribute("usuario");
+		return !(a == null);
+			
+	}
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,6 +46,7 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String acao = request.getParameter("acao");
 		criaBaseAluno();
 		
@@ -45,7 +58,10 @@ public class ServletLogin extends HttpServlet {
 			AlunoRN rn = new AlunoRN();
 			try {
 				a = rn.autenticarAluno(a);
-
+				HttpSession session = request.getSession(true);
+				session.setAttribute("usuario",a);
+				
+				a = (Aluno) session.getAttribute("usuario");
 				if(a != null && a.getId() > 0){
 					System.out.println("aluno encontrado");
 					dispatcher = request.getRequestDispatcher("paginainicial.jsp");

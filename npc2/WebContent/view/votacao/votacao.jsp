@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/lib/c.tld" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,9 +14,10 @@
 
 </head>
 <body>
+<%@ include file="/menu.jsp" %>
 	<h1 style="margin-left: 200px">Votação</h1>
 
-	<form method="post" action="index.jsp" class="form-container">
+	<form method="post" action="${pageContext.request.contextPath}/ServletVotacao?acao=votar" class="form-container">
 
 		<table class="tabela">
 			<tr style="background: #696969">
@@ -24,13 +26,17 @@
 				<th >Selecione para votar</th>
 			</tr>
 
-			<tr>
-				<td></td>
-				<td></td>
-				<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp<input type="radio" name="votar" value="votado"> </td>
-			</tr>
+
+			   <c:forEach items="${chapas}" var="c">
+					<tr>
+						<td>${c.nome}</td>
+						<td>${c.composicao}</td>
+						<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp<input type="radio" name="chapa" value="${c.id}"> </td>
+					</tr>
+			   </c:forEach>
+			
 		</table>
-		<input type="submit" value="Votar" name="btn_votar" class="btn-primary">
+		<input type="submit" value="votar" name="botao" class="btn-primary">
 	</form>
 
 </body>
