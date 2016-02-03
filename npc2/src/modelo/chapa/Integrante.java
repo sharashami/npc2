@@ -2,6 +2,7 @@ package modelo.chapa;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -19,7 +20,7 @@ public class Integrante{
 	private String funcao;
 	private String curso;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Chapa chapa;
 	
 	public String getFuncao() {

@@ -108,4 +108,26 @@ public class VotacaoDAOHibernate implements VotacaoDAO{
 	
 		return count;
 	}
+	@Override
+	public void removeVotacao() {
+		try {
+			this.sessao = HibernateUtil.getSessionFactory().openSession();
+			this.transacao = this.sessao.beginTransaction();
+			this.sessao.createQuery("delete Votacao").executeUpdate();
+			this.transacao.commit();
+		} catch (HibernateException ex) {
+			this.transacao.rollback();
+			System.out.println("Não foi possível deletar. Erro:"
+					+ ex.getMessage());
+		} finally {
+			try {
+				if (this.sessao.isOpen())
+					this.sessao.close();
+			} catch (Throwable ex) {
+				System.out
+						.println("Erro ao fechar a sessão:" + ex.getMessage());
+			}
+		}
+
+	}
 }

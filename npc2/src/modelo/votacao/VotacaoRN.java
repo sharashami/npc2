@@ -4,6 +4,7 @@ package modelo.votacao;
 import java.util.List;
 
 import modelo.FactoryDAO;
+import modelo.chapa.Chapa;
 
 public class VotacaoRN {
 	private VotacaoDAO votacaoDAO;
@@ -26,6 +27,11 @@ public class VotacaoRN {
 	}
 	public long quantidadeVotos(){
 		return votacaoDAO.quantidadeVotos();
+		
+	}
+
+	public void removeVotacao() {
+		votacaoDAO.removeVotacao();
 		
 	}
 }

@@ -28,7 +28,7 @@
 			</tr>
 			
 			<c:choose >
-				<c:when test="${chapa.id > 0}">
+				<c:when test="${!empty chapa.integrante}">
 					<c:forEach var="i" items="${chapa.integrante}">
 						<tr>
 							<th>Matricula do ${i.funcao}</th>

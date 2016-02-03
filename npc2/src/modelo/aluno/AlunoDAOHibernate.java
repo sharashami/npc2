@@ -25,7 +25,7 @@ public class AlunoDAOHibernate implements AlunoDAO{
 			aluno = (Aluno) query.uniqueResult();
 			
 		} catch (HibernateException ex) {
-			System.out.println("Erro ao fazer consulta da lista de oficinas: "
+			System.out.println("Erro ao fazer consulta da lista de alunos: "
 					+ ex.getMessage());
 		} finally {
 			try {
@@ -96,6 +96,30 @@ public class AlunoDAOHibernate implements AlunoDAO{
 			
 		} catch (HibernateException ex) {
 			System.out.println("Erro ao fazer consulta da lista: "
+					+ ex.getMessage());
+		} finally {
+			try {
+				if (this.sessao.isOpen())
+					this.sessao.close();
+			} catch (Throwable ex) {
+				System.out.println("Erro ao fechar a sessão:" + ex.getMessage());
+			}
+		}
+		return aluno;
+	}
+
+	@Override
+	public Aluno getAlunoPelaMatricula(String matricula) {
+		Aluno aluno = null;
+		try {
+			this.sessao = HibernateUtil.getSessionFactory().openSession();
+			Query query = this.sessao
+					.createQuery("select x from Aluno as x where x.matricula LIKE :mat");
+			query.setString("mat",matricula);
+			aluno = (Aluno) query.uniqueResult();
+			
+		} catch (HibernateException ex) {
+			System.out.println("Erro ao fazer consulta: "
 					+ ex.getMessage());
 		} finally {
 			try {

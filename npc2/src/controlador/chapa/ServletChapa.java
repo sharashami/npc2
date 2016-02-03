@@ -7,16 +7,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.Severity;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import modelo.aluno.Aluno;
+import modelo.aluno.AlunoRN;
 import modelo.chapa.Chapa;
 import modelo.chapa.ChapaRN;
 import modelo.chapa.Integrante;
+import modelo.votacao.VotacaoRN;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.HibernateException;
+
+import com.sun.org.apache.xpath.internal.axes.AxesWalker;
 
 import controlador.login.ServletLogin;
 import controlador.util.Formata;
@@ -59,20 +66,144 @@ public class ServletChapa extends HttpServlet {
 				if(isValidoForm(request, response, obrigatorios, chapa)){
 					chapa.setCriador(ServletLogin.usuarioLogado(request));
 					ChapaRN rn = new ChapaRN();
-					rn.salvar(chapa);
+					StringBuilder erros = new StringBuilder();
+
+					for (int i = 0; i < chapa.getIntegrante().size(); i++) {
+						//verifica se é aluno
+						Aluno aExiste = new AlunoRN().existeAluno(chapa.getIntegrante().get(i).getMatricula());
+						if(aExiste == null || aExiste.getId() <= 0){
+							erros.append("Aluno matrícula "+chapa.getIntegrante().get(i).getMatricula()+" não existe. <br>");
+						
+						}else{
+							//verifica se aluno ja esta em outra chapa
+							Chapa cDoAluno = rn.jaEstaEmChapa(aExiste.getId());
+							if(cDoAluno != null && cDoAluno.getId() > 0){
+								erros.append("Aluno matrícula "+chapa.getIntegrante().get(i).getMatricula()+" já está na chapa : "+cDoAluno.getNome()+" <br>");	
+							}
+						}
+					}
+					
+					if(!erros.toString().isEmpty()){
+						request.setAttribute("erro", erros.toString());
+						request.setAttribute("chapa", chapa);
+						dispatcher = request.getRequestDispatcher("view/chapa/formulario.jsp");
+
+				    	dispatcher.forward(request, response);
+				    	return ;
+					}
+					try {
+						rn.salvar(chapa);
+					} catch (HibernateException e) {
+						//CHAPA DUPLICADA
+						if(e.getMessage().contains("Duplicate")){
+							request.setAttribute("erro", "Não é possível cadastrar chapa duplicada.");
+						}
+						e.printStackTrace();
+					}
 					index(request, response);
 					return ;
 				}
 				
 			}else if(StringUtils.trimToEmpty(request.getParameter("botao")).equals("Editar")){
-			//alterar chapa
-			
-			}else if(StringUtils.trimToEmpty(request.getParameter("botao")).equals("Excluir")){
-			//excluir chapa
-				
+				Chapa chapa = new Chapa();
+				 String[][] obrigatorios = {{"nomechapa","Obrigatorio"},
+						 					{"presidentematricula","Obrigatorio"},{"presidentenome","Obrigatorio"},{"presidentecurso","Obrigatorio"},
+						 					{"secretariomatricula","Obrigatorio"},{"secretarionome","Obrigatorio"},{"secretariocurso","Obrigatorio"},
+						 					{"tesoureiromatricula","Obrigatorio"},{"tesoureironome","Obrigatorio"},{"tesoureirocurso","Obrigatorio"}};
+				 
+				if(isValidoForm(request, response, obrigatorios, chapa)){
+					chapa.setCriador(ServletLogin.usuarioLogado(request));
+					ChapaRN rn = new ChapaRN();
+					StringBuilder erros = new StringBuilder();
+
+					for (int i = 0; i < chapa.getIntegrante().size(); i++) {
+						//verifica se é aluno
+						Aluno aExiste = new AlunoRN().existeAluno(chapa.getIntegrante().get(i).getMatricula());
+						if(aExiste == null || aExiste.getId() <= 0){
+							erros.append("Aluno matrícula "+chapa.getIntegrante().get(i).getMatricula()+" não existe. <br>");
+						
+						}else{
+							//verifica se aluno ja esta em outra chapa
+							Chapa cDoAluno = rn.jaEstaEmChapa(aExiste.getId());
+							if(cDoAluno != null && cDoAluno.getId() > 0 ){
+								if(chapa.getId() == 0 || cDoAluno.getId() != chapa.getId()){
+									erros.append("Aluno matrícula "+chapa.getIntegrante().get(i).getMatricula()+" já está na chapa : "+cDoAluno.getNome()+" <br>");
+								}
+							}
+						}
+					}
+					
+					if(!erros.toString().isEmpty()){
+						request.setAttribute("erro", erros.toString());
+						request.setAttribute("chapa", chapa);
+						dispatcher = request.getRequestDispatcher("view/chapa/formulario.jsp");
+
+				    	dispatcher.forward(request, response);
+				    	return ;
+					}
+					try {
+						rn.alterar(chapa);
+					} catch (HibernateException e) {
+						//CHAPA DUPLICADA
+						if(e.getMessage().contains("Duplicate")){
+							request.setAttribute("erro", "Não é possível cadastrar chapa duplicada.");
+						}
+						e.printStackTrace();
+					}
+					index(request, response);
+					return ;
+				}
 			}
 			
 			dispatcher = request.getRequestDispatcher("view/chapa/formulario.jsp");
+		
+		//alterar chapa da lista
+		}else if("editar".equals(acao)){
+		
+			long id =Formata.parseLong(request.getParameter("id"));
+			if(id > 0){
+				ChapaRN rn = new ChapaRN();
+				Chapa c = rn.getChapa(id);
+				
+				if (c !=null && c.getId() > 0){
+					if(c.getCriador().getId() == ServletLogin.usuarioLogado(request).getId()){
+						request.setAttribute("chapa", c);
+						dispatcher = request.getRequestDispatcher("view/chapa/formulario.jsp");	
+					}else{
+						request.setAttribute("erro","Você só pode alterar chapas que você criou");
+						index(request, response);						return ;
+						
+					}
+				}else{
+					index(request, response);return ;
+				}
+			}
+			
+		//excluir chapa da lista
+		}else if("excluir".equals(acao)){
+		//excluir chapa
+			long id =Formata.parseLong(request.getParameter("id"));
+			ChapaRN rn = new ChapaRN();
+			Chapa c = rn.getChapa(id);
+			
+			if (c !=null && c.getId() > 0){
+				System.out.println(c.getCriador().getId() + " "+ ServletLogin.usuarioLogado(request).getId());
+				if(c.getCriador().getId() == ServletLogin.usuarioLogado(request).getId()){
+					//remove votacao
+					VotacaoRN rnVotacao =  new VotacaoRN();
+					rnVotacao.removeVotacao();
+					rn.remover(c);
+					request.setAttribute("msg","Chapa removida com sucesso");
+					index(request, response);return ;
+					
+				}else{
+					request.setAttribute("erro","Você só pode remover chapas que você criou");
+					index(request, response);						return ;
+					
+				}
+			}else{
+				index(request, response);return ;
+			}
 			
 		}else{
 			index(request, response);

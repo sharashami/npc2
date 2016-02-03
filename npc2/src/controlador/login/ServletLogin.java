@@ -62,9 +62,10 @@ public class ServletLogin extends HttpServlet {
 				session.setAttribute("usuario",a);
 				
 				a = (Aluno) session.getAttribute("usuario");
-				if(a != null && a.getId() > 0){
-					System.out.println("aluno encontrado");
+				if(a != null && a.getId() > 0){					
 					dispatcher = request.getRequestDispatcher("paginainicial.jsp");
+				}else{
+					request.setAttribute("erro", "Aluno não encontrado.");
 				}
 			} catch (HibernateException e) {
 				e.printStackTrace();

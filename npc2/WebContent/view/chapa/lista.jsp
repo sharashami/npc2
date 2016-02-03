@@ -33,8 +33,13 @@
 						<td >${c.nome}</td>
 						<td >${c.composicao}</td>
 					    <td>
-					    <input type="button" name="teditar" value="Editar" class="btn-primary"/>
-						<input type="button" name="Excluir" value="Excluir" class="btn-primary"/>
+					    
+					    
+						<a href="${pageContext.request.contextPath}/ServletChapa?acao=editar&id=${c.id}">Editar</a>
+						<a href="${pageContext.request.contextPath}/ServletChapa?acao=excluir&id=${c.id}">Remover</a>
+					    
+					    <!-- <input type="button" name="teditar" value="Editar" class="btn-primary"/>
+						<input type="button" name="Excluir" value="Excluir" class="btn-primary"/> -->
 						</td>
 				    </tr>
 			 	  

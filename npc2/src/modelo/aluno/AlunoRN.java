@@ -28,5 +28,9 @@ public class AlunoRN {
 		
 		alunoDAO.salvarAluno(aluno);
 	}
+	public Aluno existeAluno(String matricula) {
+		return alunoDAO.getAlunoPelaMatricula(matricula);
+		
+	}
 	
 }
