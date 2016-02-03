@@ -11,15 +11,11 @@ public class ChapaRN {
 	private ChapaDAO chapaDAO;
 	
 	public ChapaRN(){
-		chapaDAO = FactoryDAO.criarChapaDAO();
+		chapaDAO = FactoryDAO.getInstancia().criarChapaDAO();
 	}
 	public Chapa salvar( Chapa chapa) throws HibernateException{
 		
 		return chapaDAO.salvarChapa(chapa);
-	}
-	public Chapa alterar( Chapa chapa) throws HibernateException{
-		
-		return chapaDAO.alterarChapa(chapa);
 	}
 
 	public List<Chapa> listarChapas(){

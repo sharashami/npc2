@@ -8,7 +8,6 @@ public interface ChapaDAO {
 
 	public Chapa salvarChapa(Chapa chapa) throws HibernateException;
 
-	public Chapa alterarChapa(Chapa chapa) throws HibernateException;
 	public List<Chapa> listarChapas();
 
 	public Chapa getChapa(long id);

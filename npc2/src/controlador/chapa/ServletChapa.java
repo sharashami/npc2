@@ -112,10 +112,10 @@ public class ServletChapa extends HttpServlet {
 						 					{"tesoureiromatricula","Obrigatorio"},{"tesoureironome","Obrigatorio"},{"tesoureirocurso","Obrigatorio"}};
 				 
 				if(isValidoForm(request, response, obrigatorios, chapa)){
-					chapa.setCriador(ServletLogin.usuarioLogado(request));
-					ChapaRN rn = new ChapaRN();
+					ChapaRN rn = new ChapaRN();					
 					StringBuilder erros = new StringBuilder();
-
+					chapa.setCriador(new AlunoRN().carregarAluno(chapa.getCriador()));
+					
 					for (int i = 0; i < chapa.getIntegrante().size(); i++) {
 						//verifica se é aluno
 						Aluno aExiste = new AlunoRN().existeAluno(chapa.getIntegrante().get(i).getMatricula());
@@ -142,7 +142,7 @@ public class ServletChapa extends HttpServlet {
 				    	return ;
 					}
 					try {
-						rn.alterar(chapa);
+						rn.salvar(chapa);
 					} catch (HibernateException e) {
 						//CHAPA DUPLICADA
 						if(e.getMessage().contains("Duplicate")){
@@ -187,7 +187,7 @@ public class ServletChapa extends HttpServlet {
 			Chapa c = rn.getChapa(id);
 			
 			if (c !=null && c.getId() > 0){
-				System.out.println(c.getCriador().getId() + " "+ ServletLogin.usuarioLogado(request).getId());
+				
 				if(c.getCriador().getId() == ServletLogin.usuarioLogado(request).getId()){
 					//remove votacao
 					VotacaoRN rnVotacao =  new VotacaoRN();
@@ -256,11 +256,13 @@ public class ServletChapa extends HttpServlet {
 	private boolean isValidoForm(HttpServletRequest request, HttpServletResponse response,String[][] obrigatorios,Chapa chapa){
 		chapa.setId(Formata.parseLong(request.getParameter("id")));
 		chapa.setNome(Formata.trimToEmpty(request.getParameter("nomechapa")));
+		Aluno criador = new Aluno();criador.setId(Formata.parseLong(request.getParameter("criadorid")));
+		chapa.setCriador(criador);
 		
 		List<Integrante> integrantes = new ArrayList<Integrante>();
 		Integrante i = new Integrante();
 		
-		
+		i.setId(Formata.parseLong(request.getParameter("presidenteid")));
 		i.setFuncao("presidente");
 		i.setCurso(Formata.trimToEmpty(request.getParameter("presidentecurso")));
 		i.setMatricula(Formata.trimToEmpty(request.getParameter("presidentematricula")));
@@ -269,6 +271,7 @@ public class ServletChapa extends HttpServlet {
 		integrantes.add(i);
 
 		i = new Integrante();
+		i.setId(Formata.parseLong(request.getParameter("tesoureiroid")));
 		i.setFuncao("tesoureiro");
 		i.setCurso(Formata.trimToEmpty(request.getParameter("tesoureirocurso")));
 		i.setMatricula(Formata.trimToEmpty(request.getParameter("tesoureiromatricula")));
@@ -278,6 +281,7 @@ public class ServletChapa extends HttpServlet {
 		
 
 		i = new Integrante();
+		i.setId(Formata.parseLong(request.getParameter("secretarioid")));
 		i.setFuncao("secretario");
 		i.setCurso(Formata.trimToEmpty(request.getParameter("secretariocurso")));
 		i.setMatricula(Formata.trimToEmpty(request.getParameter("secretariomatricula")));

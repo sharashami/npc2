@@ -10,9 +10,9 @@ public class AlunoRN {
 	private AlunoDAO alunoDAO;
 	
 	public AlunoRN(){
-		alunoDAO = FactoryDAO.criarAlunoDAO();
+		alunoDAO = FactoryDAO.getInstancia().criarAlunoDAO();
 	}
-	public Aluno carregarAluno(Aluno aluno) throws HibernateException, Throwable{
+	public Aluno carregarAluno(Aluno aluno) {
 		return alunoDAO.carregarAluno(aluno);
 	}
 

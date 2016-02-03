@@ -20,7 +20,7 @@
 	<h1 style="margin-left:200px">Cadastrar Chapa</h1>
 
 	<form method="post" action="${pageContext.request.contextPath}/ServletChapa?acao=form" class="form-container">
-		<input type="hidden" name="id" value="${chapa.id}"/>
+		<input type="hidden" name="id" value="${chapa.id}"/><input type="hidden" name="criadorid" value="${chapa.criador.id}"/>
 		<table>
 			<tr>
 				<th>Nome da chapa:</th>
@@ -32,7 +32,7 @@
 					<c:forEach var="i" items="${chapa.integrante}">
 						<tr>
 							<th>Matricula do ${i.funcao}</th>
-							<td><input type="text" name="${i.funcao}matricula" value="${i.matricula}" /></td>
+							<td><input type="text" name="${i.funcao}matricula" value="${i.matricula}" /><input type="hidden" name="${i.funcao}id" value="${i.id}"/></td>
 						</tr>
 						<tr>
 							<th>Nome ${i.funcao}</th>
@@ -66,6 +66,19 @@
 					</tr>
 					
 					<tr>
+						<th>Matricula do Tesoureiro</th>
+						<td><input type="text" name="tesoureiromatricula" /></td>
+					</tr>
+					<tr>
+						<th>Nome do Tesoureiro</th>
+						<td><input type="text" name="tesoureironome" /></td>
+					</tr>
+		
+					<tr>
+						<th>Curso do Tesoureiro</th>
+						<td><input type="text" name="tesoureirocurso" /></td>
+					</tr>
+					<tr>
 						<th>Matricula do Secretario</th>
 						<td><input type="text" name="secretariomatricula" /></td>
 					</tr>
@@ -79,19 +92,6 @@
 						<td><input type="text" name="secretariocurso" /></td>
 					</tr>
 		
-					<tr>
-						<th>Matricula do Tesoureiro</th>
-						<td><input type="text" name="tesoureiromatricula" /></td>
-					</tr>
-					<tr>
-						<th>Nome do Tesoureiro</th>
-						<td><input type="text" name="tesoureironome" /></td>
-					</tr>
-		
-					<tr>
-						<th>Curso do Tesoureiro</th>
-						<td><input type="text" name="tesoureirocurso" /></td>
-					</tr>
 				</c:otherwise>
 			</c:choose>
 			

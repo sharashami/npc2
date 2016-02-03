@@ -40,32 +40,6 @@ public class ChapaDAOHibernate implements ChapaDAO{
 		
 		return registro;
 	}
-	public Chapa alterarChapa(Chapa registro) throws HibernateException{
-		try {
-			this.sessao = HibernateUtil.getSessionFactory().openSession();			
-			this.transacao = this.sessao.beginTransaction();
-			this.sessao.saveOrUpdate(registro);
-			for (int i = 0; i < registro.getIntegrante().size(); i++) {
-				this.sessao.update(registro.getIntegrante().get(i));
-			}
-			
-			this.transacao.commit();
-		} catch (HibernateException ex) {
-			this.transacao.rollback();
-			System.out.println("Não foi possivel inserir! Erro:" + ex.getMessage());
-			throw ex;
-		} finally {
-			try {
-				if (this.sessao.isOpen())
-					this.sessao.close();
-			} catch (Throwable ex) {
-				System.out
-						.println("Erro ao fechar a sessão:" + ex.getMessage());
-			}
-		}
-		
-		return registro;
-	}
 	@Override
 	public List<Chapa> listarChapas() {
 		List<Chapa> registros = null;

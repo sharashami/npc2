@@ -10,7 +10,7 @@ public class VotacaoRN {
 	private VotacaoDAO votacaoDAO;
 	
 	public VotacaoRN(){
-		votacaoDAO = FactoryDAO.criarVotacaoDAO();
+		votacaoDAO = FactoryDAO.getInstancia().criarVotacaoDAO();
 	}
 
 	public void votar(Votacao v) {

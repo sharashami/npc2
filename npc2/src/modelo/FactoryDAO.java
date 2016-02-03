@@ -10,17 +10,28 @@ import modelo.votacao.VotacaoDAO;
 import modelo.votacao.VotacaoDAOHibernate;
 
 public class FactoryDAO {
+
+	public static FactoryDAO instancia;
+	 
+	private FactoryDAO(){
+		
+	}
+    public static FactoryDAO getInstancia() {
+        if (instancia == null)
+            instancia = new FactoryDAO();
+        return instancia;
+    }
+    
 	
-	public static AlunoDAO criarAlunoDAO(){
+	public AlunoDAO criarAlunoDAO(){
 		return new AlunoDAOHibernate();
 	}
 
-	public static ChapaDAO criarChapaDAO(){
+	public ChapaDAO criarChapaDAO(){
 		return new ChapaDAOHibernate();
 	}
 
-
-	public static VotacaoDAO criarVotacaoDAO(){
+	public VotacaoDAO criarVotacaoDAO(){
 		return new VotacaoDAOHibernate();
 	}
 	

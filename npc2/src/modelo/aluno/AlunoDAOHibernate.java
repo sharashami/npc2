@@ -14,7 +14,7 @@ public class AlunoDAOHibernate implements AlunoDAO{
 	private Transaction transacao;
 
 	@Override
-	public Aluno carregarAluno(Aluno aluno) throws HibernateException, Throwable {
+	public Aluno carregarAluno(Aluno aluno) {
 		
 		
 		try {

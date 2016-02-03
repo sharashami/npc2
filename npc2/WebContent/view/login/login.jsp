@@ -6,6 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>Autenticação de Usuário</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+
+
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
@@ -15,6 +19,7 @@
 
 
 <body>
+${pageContext.request.contextPath}
 
 				<div class="loginmodal-container">
 					<h1>LOGIN</h1><br>
