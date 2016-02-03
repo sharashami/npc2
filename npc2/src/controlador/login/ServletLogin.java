@@ -71,8 +71,12 @@ public class ServletLogin extends HttpServlet {
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
+		}else	if("sair".equals(acao)){
+			HttpSession session = request.getSession();
+			session.removeAttribute("usuario");
+			request.setAttribute("msg", "Logout efetuado com sucesso.");
+			dispatcher = request.getRequestDispatcher("view/login/login.jsp");
 		}else{
-		
 			dispatcher = request.getRequestDispatcher("view/login/login.jsp");
 		}
 		

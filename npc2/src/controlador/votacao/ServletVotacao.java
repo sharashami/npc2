@@ -1,6 +1,7 @@
 package controlador.votacao;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,9 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import modelo.aluno.Aluno;
 import modelo.chapa.Chapa;
 import modelo.chapa.ChapaRN;
+import modelo.votacao.Resultado;
 import modelo.votacao.Votacao;
 import modelo.votacao.VotacaoRN;
 import controlador.login.ServletLogin;
@@ -92,7 +96,23 @@ public class ServletVotacao extends HttpServlet {
 
 	private void resultado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		VotacaoRN rn = new VotacaoRN();
-		List<Votacao> votos = rn.listarVotos();
+		
+		List<Resultado> lista = new ArrayList<Resultado>();
+
+		List<Chapa> l = new ChapaRN().listarChapas();
+		long totalVotos = rn.quantidadeVotos();
+		for (int i = 0; i < l.size(); i++) {
+			List<Votacao> votos = rn.listarVotos(l.get(i).getId());
+			Resultado r = new Resultado();
+			r.setChapa(l.get(i));
+			r.setVotos(votos.size());
+			r.setPorcentagem((r.getVotos()/(totalVotos*1.0))*100.0);
+			lista.add(r);
+		}
+		
+		
+		
+		request.setAttribute("resultado", lista);
 		dispatcher = request.getRequestDispatcher("view/votacao/resultado.jsp");	
 		dispatcher.forward(request, response);
 		

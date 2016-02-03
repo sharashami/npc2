@@ -16,7 +16,7 @@
 
 <body>
 <%@ include file="/menu.jsp" %>
-
+<!-- 
 	<form method="post" action="index.jsp" class="container" id="content">
 		<table>
 			<tr>
@@ -24,10 +24,11 @@
 				<td colspan="2"><input type="button" name="cadstrarchapa" value="Cadastrar Chapa" class="btn btn-primary button"/></td>
 				<td colspan="2"><input type="button" name="votar" value="Votar" class="btn btn-primary button""/></td>
 				<td colspan="2"><input type="button" name="visualizarvotos" value="Resultados"  class="btn btn-primary button""/></td>
+				
 			</tr>
 		
 		</table>
-	</form>
+	</form> -->
 </body>
 
 </html>

@@ -10,6 +10,7 @@ public interface VotacaoDAO {
 
 	public Votacao jaVotou(long id);
 
-	public List<Votacao> listarVotos();
+	public List<Votacao> listarVotos(long idChapa);
+	public long quantidadeVotos();
 	
 }

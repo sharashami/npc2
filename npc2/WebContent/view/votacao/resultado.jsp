@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/lib/c.tld" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,11 +26,13 @@
 				<th >Porcentagem</th>
 			</tr>
 
-			<tr>
-				<td></td>
-				<td></td>
-				<td> </td>
-			</tr>
+			<c:forEach items="${resultado}" var="r">
+				<tr>
+					<td>${r.chapa.nome}</td>
+					<td>${r.votos}</td>
+					<td>${r.porcentagem}%</td>
+				</tr>
+			</c:forEach>
 		</table>
 		<input type="button" value="Voltar" name="btn_votar" class="btn-primary">
 	</form>

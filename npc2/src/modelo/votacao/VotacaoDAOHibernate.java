@@ -6,10 +6,13 @@ import java.util.List;
 import modelo.HibernateUtil;
 import modelo.chapa.Chapa;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 
 public class VotacaoDAOHibernate implements VotacaoDAO{
 	private Session sessao;
@@ -59,12 +62,13 @@ public class VotacaoDAOHibernate implements VotacaoDAO{
 		return c;
 	}
 	@Override
-	public List<Votacao> listarVotos() {
+	public List<Votacao> listarVotos(long idChapa) {
 		List<Votacao> registros = null;
 		try {
 			this.sessao = HibernateUtil.getSessionFactory().openSession();
 			Query query = this.sessao
-					.createQuery("select x from Votacao as x");
+					.createQuery("select x from Votacao as x where x.chapa.id = :id");
+			query.setLong("id",idChapa);
 			registros = query.list();
 		} catch (HibernateException ex) {
 			System.out.println("Erro ao fazer consulta da lista"
@@ -81,4 +85,27 @@ public class VotacaoDAOHibernate implements VotacaoDAO{
 		return registros;
 	}
 
+	@Override
+	public long quantidadeVotos() {
+		long count = 0; 
+		List<Votacao> registros = null;
+		try {
+			this.sessao = HibernateUtil.getSessionFactory().openSession();
+			count = (Long) this.sessao
+					.createQuery("select count(*) from Votacao").uniqueResult();
+			
+		} catch (HibernateException ex) {
+			System.out.println("Erro ao fazer consulta da lista"
+					+ ex.getMessage());
+		} finally {
+			try {
+				if (this.sessao.isOpen())
+					this.sessao.close();
+			} catch (Throwable ex) {
+				System.out.println("Erro ao fechar a sessão:" + ex.getMessage());
+			}
+		}
+	
+		return count;
+	}
 }

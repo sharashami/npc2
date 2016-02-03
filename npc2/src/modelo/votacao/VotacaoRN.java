@@ -21,8 +21,11 @@ public class VotacaoRN {
 		return votacaoDAO.jaVotou(id);
 	}
 
-	public List<Votacao> listarVotos() {
-		return votacaoDAO.listarVotos();
+	public List<Votacao> listarVotos(long idChapa) {
+		return votacaoDAO.listarVotos(idChapa);
 	}
-	
+	public long quantidadeVotos(){
+		return votacaoDAO.quantidadeVotos();
+		
+	}
 }
